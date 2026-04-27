@@ -1,0 +1,162 @@
+"""Methods for selecting objects inside a cell to describe a pose with.
+"""
+
+from typing import List
+
+import numpy as np
+import random
+from datapreparation.kitti360pose.imports import Object3d
+
+# TODO: after debug, activate shuffling in direction and class
+
+
+def get_direction(obj, pose):
+    closest_point = obj.get_closest_point(pose)
+    obj2pose = pose - closest_point
+    if np.linalg.norm(obj2pose[0:2]) < 0.05:  # Before: 0.015
+        direction = "on-top"
+    else:
+        if abs(obj2pose[0]) >= abs(obj2pose[1]) and obj2pose[0] >= 0:
+            direction = "east"
+        if abs(obj2pose[0]) >= abs(obj2pose[1]) and obj2pose[0] <= 0:
+            direction = "west"
+        if abs(obj2pose[0]) <= abs(obj2pose[1]) and obj2pose[1] >= 0:
+            direction = "north"
+        if abs(obj2pose[0]) <= abs(obj2pose[1]) and obj2pose[1] <= 0:
+            direction = "south"
+    return direction
+
+
+def get_direction_noOntop(obj, pose):
+    obj2pose = pose[0:2] - obj.get_center()[0:2]
+    if abs(obj2pose[0]) >= abs(obj2pose[1]) and obj2pose[0] >= 0:
+        direction = "east"
+    if abs(obj2pose[0]) >= abs(obj2pose[1]) and obj2pose[0] <= 0:
+        direction = "west"
+    if abs(obj2pose[0]) <= abs(obj2pose[1]) and obj2pose[1] >= 0:
+        direction = "north"
+    if abs(obj2pose[0]) <= abs(obj2pose[1]) and obj2pose[1] <= 0:
+        direction = "south"
+    return direction
+
+
+def select_objects_closest(objects: List[Object3d], pose, num_mentioned):
+    """Simply pick the closest-by objects"""
+    distances = np.linalg.norm([obj.get_closest_point(pose) - pose for obj in objects], axis=1)
+    indices = np.argsort(distances)[0:num_mentioned]
+    return [objects[i] for i in indices]
+
+
+def select_objects_direction(objects: List[Object3d], pose, num_mentioned):
+    """Try to pick objects equally distributed among the possible directions."""
+    directions = [get_direction(obj, pose) for obj in objects]
+    direction_indices = {d: [] for d in directions}
+    for idx, d in enumerate(directions):
+        direction_indices[d].append(idx)
+
+    keys = list(direction_indices.keys())
+    # random.shuffle(keys)
+
+    offset = 0
+    indices = []
+    while len(indices) < num_mentioned:
+        for key in keys:
+            value = direction_indices[key]
+            if len(value) > offset:
+                indices.append(value[offset])
+        offset += 1
+    indices = indices[0:num_mentioned]
+    return [objects[i] for i in indices]
+
+
+def select_objects_class(objects: List[Object3d], pose, num_mentioned):
+    """Try to describe as many classes as possible."""
+    class_indices = {obj.label: [] for obj in objects}
+    for idx, obj in enumerate(objects):
+        class_indices[obj.label].append(idx)
+
+    keys = list(class_indices.keys())
+    # random.shuffle(keys)
+
+    offset = 0
+    indices = []
+    while len(indices) < num_mentioned:
+        for key in keys:
+            value = class_indices[key]
+            if len(value) > offset:
+                indices.append(value[offset])
+        offset += 1
+    indices = indices[0:num_mentioned]
+    return [objects[i] for i in indices]
+
+
+def select_objects_random(objects: List[Object3d], pose, num_mentioned):
+    """Simply pick random objects"""
+    return list(np.random.choice(objects, size=num_mentioned, replace=False))
+
+
+def select_objects_direction_random(objects: List[Object3d], pose, num_mentioned):
+    """Try to pick objects equally distributed among the possible directions."""
+    directions = [get_direction(obj, pose) for obj in objects]
+    directions_org = ["east", "west", "north", "south", "on-top"]
+    direction_indices = {d: [] for d in directions_org}
+    for idx, d in enumerate(directions):
+        direction_indices[d].append(idx)
+
+    keys = np.array(list(direction_indices.keys()))
+    num_values = list(direction_indices.values())
+    num_values = np.array(list(map(len, num_values)))
+    # number = 2-5  => choose the number in one direction, and choose 1 object in other direction
+    # number = 1 => 2,2,1,1,1 
+    max_value = min(np.max(num_values), num_mentioned - 1)
+    num_zero = np.sum(num_values == 0)
+    num_two = np.sum(num_values >= 2)
+    min_value = 2 + num_zero
+    potential_value = []
+    for i in range(min_value, max_value + 1):
+        if i == 2 or i == 3:
+            potential_value += [i, i, i]
+        elif i == 4: 
+            potential_value += [i, i]
+        elif i == 5:
+            potential_value += [i]
+        else:
+            raise "ERROR!"
+    
+    if num_two >= 2 and num_zero <= 1:
+        potential_value += [1, 1]
+    if num_two >= 3:
+        potential_value += [0]
+
+    if potential_value == []:
+        # print("NO POTENTIAL VALUE")
+        return []
+
+    value = np.random.choice(np.array(potential_value), size=1, replace=False)[0]
+    if value >= 2:
+        potential_key = keys[num_values >= value]
+        final_keys = np.random.choice(np.array(potential_key), size=1, replace=False)
+    elif value == 1: 
+        potential_key = keys[num_values >= 2]
+        final_keys= np.random.choice(np.array(potential_key), size=2, replace=False)
+    elif value == 0:
+        potential_key = keys[num_values >= 2]
+        final_keys = np.random.choice(np.array(potential_key), size=3, replace=False)
+
+
+    keys = np.random.choice(keys, size=len(keys), replace=False)
+
+    indices = []
+    direction_size = max(value, 2)
+    for key in final_keys:
+        indices += list(np.random.choice(np.array(direction_indices[key]), size = direction_size, replace=False))
+    while len(indices) < num_mentioned:
+        for key in keys:
+            if key in final_keys:
+                continue
+            if len(direction_indices[key]) == 0:
+                continue
+            index_value = np.random.choice(direction_indices[key], size=1, replace=False)[0]
+            indices.append(index_value)
+    indices = indices[0:num_mentioned]
+    return [objects[i] for i in indices]

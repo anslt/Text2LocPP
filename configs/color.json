@@ -1,0 +1,36 @@
+{
+    "SCENE_NAMES" : [
+        "Town01",
+        "Town02",
+        "Town03",
+        "Town04",
+        "Town05",
+        "Town06",
+        "Town07",
+        "Soufflot03",
+        "Soufflot12",
+        "Soufflot45",
+        "toronto_train",
+        "toronto_test"
+    ],
+    "SCENE_NAMES_TRAIN" : [
+        "Town02", 
+        "Town03",
+        "Town04",
+        "Town05",
+        "Town06",
+        "Soufflot03",
+        "Soufflot12"
+    ],
+    "SCENE_NAMES_VAL" : [
+        "Town01",
+        "Town07",
+        "Soufflot45"
+
+
+    ],
+    "SCENE_NAMES_TEST" : [
+        "toronto"
+    ]
+    
+}

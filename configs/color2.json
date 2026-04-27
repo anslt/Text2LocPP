@@ -1,0 +1,53 @@
+{
+    "SCENE_NAMES" : [
+        "2013_05_28_drive_0000_sync",
+        "2013_05_28_drive_0002_sync",
+        "2013_05_28_drive_0003_sync",
+        "2013_05_28_drive_0004_sync",
+        "2013_05_28_drive_0005_sync",
+        "2013_05_28_drive_0006_sync",
+        "2013_05_28_drive_0007_sync",
+        "2013_05_28_drive_0009_sync",
+        "2013_05_28_drive_0010_sync",
+        "Town01",
+        "Town02",
+        "Town03",
+        "Town04",
+        "Town05",
+        "Town06",
+        "Town07",
+        "Soufflot03",
+        "Soufflot12",
+        "Soufflot45",
+        "toronto_train",
+        "toronto_test"
+    ],
+    "SCENE_NAMES_TRAIN" : [
+        "2013_05_28_drive_0000_sync",
+        "2013_05_28_drive_0002_sync",
+        "2013_05_28_drive_0004_sync",
+        "2013_05_28_drive_0006_sync",
+        "2013_05_28_drive_0007_sync",
+        "Town02", 
+        "Town03",
+        "Town04",
+        "Town05",
+        "Town06",
+        "Soufflot03",
+        "Soufflot12",
+        "toronto_train"
+    ],
+    "SCENE_NAMES_VAL" : [
+        "Town01",
+        "Town07",
+        "Soufflot45",
+        "toronto_test"
+    ],
+    "SCENE_NAMES_TEST" : [
+        "2013_05_28_drive_0003_sync",
+        "2013_05_28_drive_0005_sync",
+        "2013_05_28_drive_0009_sync"
+
+    ]
+    
+}
