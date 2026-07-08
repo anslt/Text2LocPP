@@ -19,8 +19,7 @@
         "Soufflot03",
         "Soufflot12",
         "Soufflot45",
-        "toronto_train",
-        "toronto_test"
+        "toronto"
     ],
     "SCENE_NAMES_TRAIN" : [
         "2013_05_28_drive_0000_sync",
@@ -34,14 +33,12 @@
         "Town05",
         "Town06",
         "Soufflot03",
-        "Soufflot12",
-        "toronto_train"
+        "Soufflot12"
     ],
     "SCENE_NAMES_VAL" : [
         "Town01",
         "Town07",
-        "Soufflot45",
-        "toronto_test"
+        "Soufflot45"
     ],
     "SCENE_NAMES_TEST" : [
         "2013_05_28_drive_0003_sync",

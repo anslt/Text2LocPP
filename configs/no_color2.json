@@ -26,8 +26,7 @@
         "tum_train"
     ],
     "SCENE_NAMES_VAL" : [
-        "Paris",
-        "tum_test"
+        "Paris"
     ],
     "SCENE_NAMES_TEST" : [
         "2013_05_28_drive_0003_sync",
