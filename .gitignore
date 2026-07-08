@@ -22,9 +22,9 @@ output_value*
 
 all_data
 slurm/
+data2
+data
 datapreparation/kitti360pose/prepare_*
-training/
-text_training/
-training_lora/
+scripts_own/
 .cursor/
 .ipynb_checkpoints/
