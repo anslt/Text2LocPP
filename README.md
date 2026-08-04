@@ -1,10 +1,10 @@
-# Text2Loc++
+# Text2Loc++: Generalizing 3D Point Cloud Localization from Natural Language
 
 This repository is the official implementation of our paper:
 
-[Text2Loc++: Generalizing 3D Point Cloud Localization from Natural Language](https://arxiv.org/abs/2511.15308)
+## [Paper](https://arxiv.org/abs/2511.15308) | [Dataset](https://huggingface.co/datasets/sltttt/Text2Loc) | [Old Paper](https://arxiv.org/abs/2311.15977)
 
-It extends [Text2Loc: 3D Point Cloud Localization from Natural Language (CVPR 2024)](https://arxiv.org/abs/2311.15977) and supports three language complexity settings:
+Text2Loc++ generalizes Text2Loc from a single KITTI-360 benchmark to multiple outdoor point-cloud datasets, and supports three language complexity settings:
 - Simple
 - Moderate
 - Complex
