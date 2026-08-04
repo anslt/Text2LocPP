@@ -81,9 +81,9 @@ class Kitti360BaseDataset(Dataset):
             print("POSE 0")
             
         if no_color and osp.samefile(base_path, "./data/k360_30-10_scG_pd10_pc4_spY_all"):
-            if osp.exists(osp.join(base_path, "texts2", f"{scene_name}.json")) and text_mode == 1:
+            if osp.exists(osp.join(base_path, "text1_no_color", f"{scene_name}.json")) and text_mode == 1:
                 assert osp.exists(osp.join(base_path, "texts1", f"{scene_name}_label.json"))
-                with open(osp.join(base_path, "texts2", f"{scene_name}.json"), "r") as d:
+                with open(osp.join(base_path, "text1_no_color", f"{scene_name}.json"), "r") as d:
                     self.med_texts = json.load(d)
                     d.close()
                 with open(osp.join(base_path, "texts1", f"{scene_name}_label.json"), "r") as d:
@@ -105,44 +105,44 @@ class Kitti360BaseDataset(Dataset):
                 self.med_texts = []
 
         if no_color and osp.samefile(base_path, "./data/k360_30-10_scG_pd10_pc4_spY_all"):
-            if osp.exists(osp.join(base_path, "gpt_texts2", f"{scene_name}.json")) and text_mode == 2:
-                with open(osp.join(base_path, "gpt_texts2", f"{scene_name}.json"), "r") as d:
+            if osp.exists(osp.join(base_path, "text2_no_color", f"{scene_name}.json")) and text_mode == 2:
+                with open(osp.join(base_path, "text2_no_color", f"{scene_name}.json"), "r") as d:
                     self.hard_texts = json.load(d)
                     d.close()
-            elif osp.exists(osp.join(base_path, "gpt_texts2", "text0_new", f"{scene_name}.json")) and text_mode == 4:
-                with open(osp.join(base_path, "gpt_texts2", "text0_new", f"{scene_name}.json"), "r") as d:
-                    self.hard_texts = json.load(d)
-                    d.close()
+            # elif osp.exists(osp.join(base_path, "text2_no_color", "text0_new", f"{scene_name}.json")) and text_mode == 4:
+            #     with open(osp.join(base_path, "text2_no_color", "text0_new", f"{scene_name}.json"), "r") as d:
+            #         self.hard_texts = json.load(d)
+            #         d.close()
             else:
                 self.hard_texts = []
         else:
-            if osp.exists(osp.join(base_path, "gpt_texts1", f"{scene_name}.json")) and text_mode == 2:
-                with open(osp.join(base_path, "gpt_texts1", f"{scene_name}.json"), "r") as d:
+            if osp.exists(osp.join(base_path, "text2", f"{scene_name}.json")) and text_mode == 2:
+                with open(osp.join(base_path, "text2", f"{scene_name}.json"), "r") as d:
                     self.hard_texts = json.load(d)
                     d.close()
-            elif osp.exists(osp.join(base_path, "gpt_texts1", "text0", f"{scene_name}.json")) and text_mode == 3:
-                with open(osp.join(base_path, "gpt_texts1", "text0", f"{scene_name}.json"), "r") as d:
-                    self.hard_texts = json.load(d)
-                    d.close()
-            elif osp.exists(osp.join(base_path, "gpt_texts1", "text0_t5-small", f"{scene_name}.json")) and text_mode == 4:
-                with open(osp.join(base_path, "gpt_texts1", "text0_t5-small", f"{scene_name}.json"), "r") as d:
-                    self.hard_texts = json.load(d)
-                    d.close()
+            # elif osp.exists(osp.join(base_path, "text2", "text0", f"{scene_name}.json")) and text_mode == 3:
+            #     with open(osp.join(base_path, "text2", "text0", f"{scene_name}.json"), "r") as d:
+            #         self.hard_texts = json.load(d)
+            #         d.close()
+            # elif osp.exists(osp.join(base_path, "text2", "text0_t5-small", f"{scene_name}.json")) and text_mode == 4:
+            #     with open(osp.join(base_path, "text2", "text0_t5-small", f"{scene_name}.json"), "r") as d:
+            #         self.hard_texts = json.load(d)
+            #         d.close()
             else:
                 self.hard_texts = []
     
         # if base_path != "./data/k360_30-10_scG_pd10_pc4_spY_all":
         #     import pdb; pdb.set_trace()
         if no_color and osp.samefile(base_path, "./data/k360_30-10_scG_pd10_pc4_spY_all"):
-            if osp.exists(osp.join(base_path, "texts5", f"{scene_name}.json")) and text_mode == 2:
-                with open(osp.join(base_path, "texts5", f"{scene_name}.json"), "r") as d:
+            if osp.exists(osp.join(base_path, "text2_no_color_train", f"{scene_name}.json")) and text_mode == 2:
+                with open(osp.join(base_path, "text2_no_color_train", f"{scene_name}.json"), "r") as d:
                     self.hard_texts_help = json.load(d)
                     d.close()
             else:
                 self.hard_texts_help = []
         else:
-            if osp.exists(osp.join(base_path, "texts4", f"{scene_name}.json")) and text_mode == 2:
-                with open(osp.join(base_path, "texts4", f"{scene_name}.json"), "r") as d:
+            if osp.exists(osp.join(base_path, "text2_train", f"{scene_name}.json")) and text_mode == 2:
+                with open(osp.join(base_path, "text2_train", f"{scene_name}.json"), "r") as d:
                     self.hard_texts_help = json.load(d)
                     d.close()
             else:
