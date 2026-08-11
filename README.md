@@ -1,6 +1,6 @@
 # Text2Loc++: Generalizing 3D Point Cloud Localization from Natural Language
 
-This repository is the official implementation of our paper:
+This repository is the official implementation of our paper.
 
 ## [Paper](https://arxiv.org/abs/2511.15308) | [Dataset](https://huggingface.co/datasets/sltttt/Text2Loc) | [Old Paper](https://arxiv.org/abs/2311.15977)
 
