@@ -26,6 +26,5 @@ data2
 data
 datapreparation/kitti360pose/prepare_*
 scripts_own/
-scripts/
 .cursor/
 .ipynb_checkpoints/
